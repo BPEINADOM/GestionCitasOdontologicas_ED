@@ -1,6 +1,7 @@
 package co.edu.udec.modelo;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Cita {
 
@@ -90,6 +91,11 @@ public class Cita {
         Cita cita = (Cita) objeto;
 
         return codigo.equals(cita.codigo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(codigo);
     }
 
     @Override
