@@ -208,6 +208,31 @@ public class SistemaCitas {
         return new HashSet<>(especialidades);
     }
 
+    // Consulta la siguiente que debe atenderse
+    public Cita consultarSiguienteCita() {
+        return citasPendientes.peek();
+    }
+
+    // Atiende la siguiente cita segun su prioridad
+    public Cita atenderSiguienteCita() throws Exception {
+
+        if (citasPendientes.isEmpty()) {
+            throw new Exception("No hay citas pendientes por atender");
+        }
+
+        Cita cita = citasPendientes.poll();
+
+        cita.setEstado(EstadoCita.ATENDIDA);
+
+        return cita;
+
+    }
+
+    // Devuelve la cantidad de citas pendientes
+    public int contarCintasPendientes() {
+        return citasPendientes.size();
+    }
+
     
     
 }
