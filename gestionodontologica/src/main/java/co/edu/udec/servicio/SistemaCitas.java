@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import co.edu.udec.modelo.Cita;
+import co.edu.udec.modelo.EstadoCita;
 import co.edu.udec.modelo.Odontologo;
 import co.edu.udec.modelo.Paciente;
 
@@ -101,10 +102,87 @@ public class SistemaCitas {
             throw new Exception("La especialidad es obligatoria");
         }
 
+        if (odontologosPorDocumento.containsKey(odontologo.getDocumento())) {
+            throw new Exception("Ya existe un odontologo con ese documento");
+        }
+
         odontologosPorDocumento.put(odontologo.getDocumento(), odontologo);
 
         // Hashset evita almacenar especialidades repetidas
         especialidades.add(odontologo.getEspecialidad().trim());
 
     }
+
+    // Busca un odontologo por su documento
+    public Odontologo buscarOdontologo(String documento) {
+        return odontologosPorDocumento.get(documento);
+    }
+
+    // Comprueba si un odontologo esta registrado
+    public boolean existeOdontologo(String documento) {
+        return odontologosPorDocumento.containsKey(documento);
+    }
+
+    // Registrar una cita y la incorpora a las colecciones del sistema
+    public void registrarCita(Cita cita) throws Exception {
+
+        if (cita == null) {
+            throw new Exception("La cita no puede ser nula.");
+        }
+
+        if (cita.getCodigo() == null || cita.getCodigo().isBlank()) {
+            throw new Exception("El codigo de la cita es obligatorio");
+        }
+
+        if (citasPorCodigo.containsKey(cita.getCodigo())) {
+            throw new Exception("Ya existe una cita con ese codigo");
+        }
+
+        if (cita.getPaciente() == null || !existePaciente(cita.getPaciente().getDocumento())) {
+            throw new Exception("El paciente no esta registrado");
+        }
+
+        if (cita.getOdontologo() == null || !existeOdontologo(cita.getOdontologo().getDocumento())) {
+            throw new Exception("El odontologo no esta registrado");
+        }
+
+        if (cita.getFechaHora() == null) {
+            throw new Exception("La fecha y hora son obligatorias");
+        }
+
+        if (cita.getPrioridad() == null) {
+            throw new Exception("La prioridad es obligatoria");
+        }
+
+        if (cita.getEstado() == null) {
+            throw new Exception("El estado de la cita es obligatorio");
+        }
+
+        // Almacenar la cita en la lista general.
+        citas.add(cita);
+
+        // Registrar la cita en el mapa utilizando su código.
+        citasPorCodigo.put(cita.getCodigo(), cita);
+
+        // Organizar la cita por fecha y hora.
+        citasPorfecha
+                .computeIfAbsent(cita.getFechaHora(), fecha -> new ArrayList<>())
+                .add(cita);
+
+        // Incorporar la cita a la cola si está pendiente.
+        if (cita.getEstado() == EstadoCita.PENDIENTE) {
+            citasPendientes.offer(cita);
+        }
+    }
+
+    // Busca una cita mediante su codigo
+    public Cita buscarCita(String codigo) {
+        return citasPorCodigo.get(codigo);
+    }
+
+    // Comprueba si existe una cita con determinado codigo
+    public boolean existeCita(String codigo) {
+        return citasPorCodigo.containsKey(codigo);
+    }
+    
 }
