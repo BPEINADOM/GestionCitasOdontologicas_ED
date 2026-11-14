@@ -184,5 +184,30 @@ public class SistemaCitas {
     public boolean existeCita(String codigo) {
         return citasPorCodigo.containsKey(codigo);
     }
+
+    // Devuelve todas las citas registradas
+    public List<Cita> listarCitas() {
+        return new ArrayList<>(citas);
+    }
+
+    // Muestra las citas organizadas cronologicamente
+    public List<Cita> listarCitasPorFecha() {
+
+        List<Cita> citasOrdenadas = new ArrayList<>();
+
+        for (List<Cita> grupoCitas : citasPorfecha.values()) {
+            citasOrdenadas.addAll(grupoCitas);
+        }
+
+        return citasOrdenadas;
+        
+    }
+
+    // Devuelve las especialidades sin duplicados
+    public Set<String> listarEspecialidades() {
+        return new HashSet<>(especialidades);
+    }
+
+    
     
 }
