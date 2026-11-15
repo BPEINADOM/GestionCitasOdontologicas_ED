@@ -123,6 +123,10 @@ public class MenuConsola {
                 modificarCita();
                 break;
 
+            case 11:
+                cancelarCita();
+                break;
+
             case 0:
                 break;
 
@@ -424,7 +428,31 @@ public class MenuConsola {
 
         sistema.modificarCita(codigo, paciente, odontologo, fechaHora, prioridad);
 
-        System.out.println("\nCita modificada correctamente.");
+        System.out.println("\nCita modificada correctamente");
+        System.out.println(sistema.buscarCita(codigo));
+    }
+
+    // Cancelar una cita por codigo
+    private void cancelarCita() throws Exception {
+
+        System.out.println("\n===== CANCELAR CITA =====");
+
+        System.out.print("Codigo de la cita: ");
+        String codigo = scanner.nextLine().trim();
+
+        Cita cita = sistema.buscarCita(codigo);
+
+        if (cita == null) {
+            System.out.println("No existe una cita con ese codigo");
+            return;
+        }
+
+        System.out.println("\nCita seleccionada:");
+        System.out.println(cita);
+
+        sistema.cancelarCita(codigo);
+
+        System.out.println("\nCita cancelada correctamente");
         System.out.println(sistema.buscarCita(codigo));
     }
 }
