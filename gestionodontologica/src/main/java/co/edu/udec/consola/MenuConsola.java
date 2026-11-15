@@ -111,6 +111,10 @@ public class MenuConsola {
                 listarCitasPorFecha();
                 break;
 
+            case 8:
+                consultarSiguienteCita();
+                break;
+
             case 0:
                 break;
 
@@ -311,6 +315,23 @@ public class MenuConsola {
         for (Cita cita : lista) {
             System.out.println(cita);
         }
+
+    }
+
+    // Consultar la siguiente cita
+    private void consultarSiguienteCita() {
+
+        System.out.println("\n===== SIGUIENTE CITA POR ATENDER =====");
+
+        Cita cita = sistema.consultarSiguienteCita();
+
+        if (cita == null) {
+            System.out.println("No hay citas pendientes por atender");
+            return;
+        }
+
+        System.out.println("La siguiente cita es:");
+        System.out.println(cita);
 
     }
 }
