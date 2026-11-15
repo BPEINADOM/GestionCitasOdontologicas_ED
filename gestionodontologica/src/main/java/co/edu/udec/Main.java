@@ -1,13 +1,12 @@
 package co.edu.udec;
 
-/**
- * Hello world!
- *
- */
+import co.edu.udec.consola.MenuConsola;
+
 public class Main 
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        MenuConsola menu = new MenuConsola();
+        menu.iniciar();
     }
 }
