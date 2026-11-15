@@ -97,6 +97,10 @@ public class MenuConsola {
             case 4:
                 listarCitas();
                 break;
+            
+            case 5:
+                buscarCita();
+                break;
 
             case 0:
                 break;
@@ -240,6 +244,28 @@ public class MenuConsola {
         for (Cita cita : lista) {
             System.out.println(cita);
         }
+
+    }
+
+    // Buscar citas por codigo
+    private void buscarCita() {
+
+        System.out.println("\n===== BUSCAR CITA =====");
+
+        System.out.print("Ingrese el codigo de la cita: ");
+        String codigo = scanner.nextLine().trim();
+
+        Cita cita = sistema.buscarCita(codigo);
+
+        if (cita == null) {
+            
+            System.out.println("No se encontro ninguna cita con ese codigo");
+            return;
+
+        }
+
+        System.out.println("\nCita encontrada:");
+        System.out.println(cita);
 
     }
 }
