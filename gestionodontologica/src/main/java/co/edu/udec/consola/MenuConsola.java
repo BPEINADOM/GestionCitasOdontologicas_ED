@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 import co.edu.udec.modelo.Cita;
 import co.edu.udec.modelo.Odontologo;
@@ -100,6 +101,10 @@ public class MenuConsola {
             
             case 5:
                 buscarCita();
+                break;
+            
+            case 6:
+                consultarEspecialidades();
                 break;
 
             case 0:
@@ -266,6 +271,24 @@ public class MenuConsola {
 
         System.out.println("\nCita encontrada:");
         System.out.println(cita);
+
+    }
+
+    // Consultar las especialidades disponibles
+    public void consultarEspecialidades() {
+
+        System.out.println("\n===== ESPECIALIDADES DISPONIBLES =====");
+
+        Set<String> lista = sistema.listarEspecialidades();
+
+        if (lista.isEmpty()) {
+            System.out.println("No hay especialidades registradas");
+            return;
+        }
+
+        for (String especialidad : lista) {
+            System.out.println("- " + especialidad);
+        }
 
     }
 }
