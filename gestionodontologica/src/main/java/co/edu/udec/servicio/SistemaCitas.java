@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
@@ -110,7 +111,7 @@ public class SistemaCitas {
         odontologosPorDocumento.put(odontologo.getDocumento(), odontologo);
 
         // Hashset evita almacenar especialidades repetidas
-        especialidades.add(odontologo.getEspecialidad().trim());
+        especialidades.add(odontologo.getEspecialidad().trim().toLowerCase(Locale.ROOT));
 
     }
 
@@ -146,6 +147,12 @@ public class SistemaCitas {
         if (cita.getOdontologo() == null || !existeOdontologo(cita.getOdontologo().getDocumento())) {
             throw new Exception("El odontologo no esta registrado");
         }
+
+        // Asociar los objetos registrados oficialmente en el sistema
+        cita.setPaciente(pacientesPorDocumento.get(cita.getPaciente().getDocumento()));
+
+        cita.setOdontologo(odontologosPorDocumento.get(cita.getOdontologo().getDocumento()));
+
 
         if (cita.getFechaHora() == null) {
             throw new Exception("La fecha y hora son obligatorias");
@@ -263,7 +270,7 @@ public class SistemaCitas {
             throw new Exception("La nueva prioridad es obligatoria");
         }
 
-        // Retirar la cita de la cola antes de cambiar mi privacidad
+        // Retirar la cita de la cola antes de actualizar la prioridad de la cita
         citasPendientes.remove(cita);
 
         // Retirar la cita de su fecha anterior en el TreeMap
@@ -275,9 +282,10 @@ public class SistemaCitas {
             citasPorfecha.remove(cita.getFechaHora());
         }
 
-        // Modificar los datos de la cita
-        cita.setPaciente(nuevoPaciente);
-        cita.setOdontologo(nuevoOdontologo);
+        // Asociar los objetos registrados oficialmente en el sistema
+        cita.setPaciente(pacientesPorDocumento.get(nuevoPaciente.getDocumento()));
+        cita.setOdontologo(odontologosPorDocumento.get(nuevoOdontologo.getDocumento()));
+
         cita.setFechaHora(nuevaFecha);
         cita.setPrioridad(nuevaPrioridad);
 
