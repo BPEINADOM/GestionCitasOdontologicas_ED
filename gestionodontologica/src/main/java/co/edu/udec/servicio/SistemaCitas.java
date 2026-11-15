@@ -339,5 +339,37 @@ public class SistemaCitas {
             }
         }
     }
+
+    // Muestra las estadisticas generales de las citas
+    public void mostrarEstadisticas() {
+
+        int total = citas.size();
+        int pendientes = 0;
+        int atendidas = 0;
+        int canceladas = 0;
+
+        // Recorrer todas las citas registradas
+        for (Cita cita : citas) {
+
+            if (cita.getEstado() == EstadoCita.PENDIENTE) {
+                pendientes++;
+            } else if (cita.getEstado() == EstadoCita.ATENDIDA) {
+                atendidas++;
+            } else if (cita.getEstado() == EstadoCita.CANCELADA) {
+                canceladas++;
+            }
+        }
+
+        System.out.println("\n===== ESTADISTICAS DEL SISTEMA =====");
+        System.out.println("Total de citas: " + total);
+        System.out.println("Citas pendientes: " + pendientes);
+        System.out.println("Citas atendidas: " + atendidas);
+        System.out.println("Citas canceladas: " + canceladas);
+        System.out.println("Pacientes registrados: " + pacientesPorDocumento.size());
+        System.out.println("Odontologos registrados: " + odontologosPorDocumento.size());
+        System.out.println("Especialidades disponibles: " + especialidades.size());
+        System.out.println("Citas en cola de atencion: " + citasPendientes.size());
+        
+    }
     
 }
