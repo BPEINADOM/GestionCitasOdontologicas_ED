@@ -107,6 +107,10 @@ public class MenuConsola {
                 consultarEspecialidades();
                 break;
 
+            case 7:
+                listarCitasPorFecha();
+                break;
+
             case 0:
                 break;
 
@@ -288,6 +292,24 @@ public class MenuConsola {
 
         for (String especialidad : lista) {
             System.out.println("- " + especialidad);
+        }
+
+    }
+
+    // Listar las citas por fecha
+    private void listarCitasPorFecha() {
+
+        System.out.println("\n===== CITAS ORDENADAS POR FECHA =====");
+
+        List<Cita> lista = sistema.listarCitasPorFecha();
+
+        if (lista.isEmpty()) {
+            System.out.println("No hay citas registradas");
+            return;
+        }
+
+        for (Cita cita : lista) {
+            System.out.println(cita);
         }
 
     }
