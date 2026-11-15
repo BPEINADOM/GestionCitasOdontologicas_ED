@@ -1,9 +1,13 @@
 package co.edu.udec.consola;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
+import co.edu.udec.modelo.Cita;
 import co.edu.udec.modelo.Odontologo;
 import co.edu.udec.modelo.Paciente;
+import co.edu.udec.modelo.Prioridad;
 import co.edu.udec.servicio.SistemaCitas;
 
 public class MenuConsola {
@@ -84,6 +88,10 @@ public class MenuConsola {
             case 2:
                 registrarOdontologo();
                 break;
+            
+            case 3:
+                registrarCita();
+                break;
 
             case 0:
                 break;
@@ -137,6 +145,78 @@ public class MenuConsola {
         sistema.registrarOdontologo(odontologo);
 
         System.out.println("Odontologo registrado correctamente");
+
+    }
+
+    // Solicita los datos y registra una cita
+    private void registrarCita() throws Exception {
+
+        System.out.println("\n===== REGISTRAR CITA =====");
+
+        System.out.print("Codigo de la cita: ");
+        String codigo = scanner.nextLine().trim();
+
+        System.out.print("Documento del paciente: ");
+        String documentoPaciente = scanner.nextLine().trim();
+
+        Paciente paciente = sistema.buscarPaciente(documentoPaciente);
+
+        if (paciente == null) {
+            throw new Exception("No existe un paciente con ese documento");
+        }
+
+        System.out.print("Documento del odontologo: ");
+        String documentoOdontologo = scanner.nextLine().trim();
+
+        Odontologo odontologo = sistema.buscarOdontologo(documentoOdontologo);
+
+        if (odontologo == null) {
+            throw new Exception("No existe un odontologo con ese documento");
+        }
+
+        System.out.print("Fecha y hora (dd/MM/yyyy HH:mm): ");
+        String fechaTexto = scanner.nextLine().trim();
+
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+        LocalDateTime fechaHora = LocalDateTime.parse(fechaTexto, formato);
+
+        System.out.println("\nPrioridades disponibles:");
+        System.out.println("1. CRITICA");
+        System.out.println("2. ALTA");
+        System.out.println("3. MEDIA");
+        System.out.println("4. BAJA");
+
+        System.out.print("Seleccione la prioridad: ");
+        int opcionPrioridad = Integer.parseInt(scanner.nextLine());
+
+        Prioridad prioridad;
+
+        switch (opcionPrioridad) {
+
+            case 1:
+                prioridad = Prioridad.CRITICA;
+                break;
+            case 2:
+                prioridad = Prioridad.ALTA;
+                break;
+            case 3:
+                prioridad = Prioridad.MEDIA;
+                break;
+            case 4:
+                prioridad = Prioridad.BAJA;
+                break;
+            default:
+                throw new Exception("La prioridad seleccionada no es valida");
+        
+        }
+
+        Cita cita = new Cita(codigo, paciente, odontologo, fechaHora, prioridad);
+
+        sistema.registrarCita(cita);
+
+        System.out.println("\nCita registrada correctamente");
+        System.out.println(cita);
 
     }
 }
