@@ -2,6 +2,7 @@ package co.edu.udec.consola;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Scanner;
 
 import co.edu.udec.modelo.Cita;
@@ -91,6 +92,10 @@ public class MenuConsola {
             
             case 3:
                 registrarCita();
+                break;
+
+            case 4:
+                listarCitas();
                 break;
 
             case 0:
@@ -217,6 +222,24 @@ public class MenuConsola {
 
         System.out.println("\nCita registrada correctamente");
         System.out.println(cita);
+
+    }
+
+    // Listar todas las citas registradas
+    private void listarCitas() {
+
+        System.out.println("\n===== TODAS LAS CITAS =====");
+
+        List<Cita> lista = sistema.listarCitas();
+
+        if (lista.isEmpty()) {
+            System.out.println("No hay citas registradas");
+            return;
+        }
+
+        for (Cita cita : lista) {
+            System.out.println(cita);
+        }
 
     }
 }
