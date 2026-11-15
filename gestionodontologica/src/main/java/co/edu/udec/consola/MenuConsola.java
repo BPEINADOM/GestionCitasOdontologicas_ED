@@ -2,6 +2,8 @@ package co.edu.udec.consola;
 
 import java.util.Scanner;
 
+import co.edu.udec.modelo.Odontologo;
+import co.edu.udec.modelo.Paciente;
 import co.edu.udec.servicio.SistemaCitas;
 
 public class MenuConsola {
@@ -75,6 +77,14 @@ public class MenuConsola {
         
         switch (opcion) {
 
+            case 1:
+                registrarPaciente();
+                break;
+            
+            case 2:
+                registrarOdontologo();
+                break;
+
             case 0:
                 break;
 
@@ -82,5 +92,51 @@ public class MenuConsola {
                 System.out.println("Esta opcion aun no ha sido implementada");
                 break;
         }
+    }
+
+    // Solicita los datos y registra un paciente
+    private void registrarPaciente() throws Exception {
+
+        System.out.println("\n===== REGISTRAR PACIENTE =====");
+
+        System.out.print("Documento: ");
+        String documento = scanner.nextLine().trim();
+
+        System.out.print("Nombre completo: ");
+        String nombre = scanner.nextLine().trim();
+
+        System.out.print("Telefono: ");
+        String telefono = scanner.nextLine().trim();
+
+        Paciente paciente = new Paciente(documento, nombre, telefono);
+
+        sistema.registrarPaciente(paciente);
+
+        System.out.println("Paciente registrado correctamente");
+
+    }
+
+    // Solicita los datos y registra un odontologo
+    private void registrarOdontologo() throws Exception {
+
+        System.out.println("\n===== REGISTRAR ODONTOLOGO =====");
+
+        System.out.print("Documento: ");
+        String documento = scanner.nextLine().trim();
+
+        System.out.print("Nombre completo: ");
+        String nombre = scanner.nextLine().trim();
+
+        System.out.print("Especialidad: ");
+        String especialidad = scanner.nextLine().trim();
+
+        Odontologo odontologo = new Odontologo(
+                documento, nombre, especialidad
+        );
+
+        sistema.registrarOdontologo(odontologo);
+
+        System.out.println("Odontologo registrado correctamente");
+
     }
 }
