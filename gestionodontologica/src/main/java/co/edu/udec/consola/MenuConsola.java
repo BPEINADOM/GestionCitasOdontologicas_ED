@@ -115,6 +115,10 @@ public class MenuConsola {
                 consultarSiguienteCita();
                 break;
 
+            case 9:
+                atenderSiguienteCita();
+                break;
+
             case 0:
                 break;
 
@@ -331,6 +335,18 @@ public class MenuConsola {
         }
 
         System.out.println("La siguiente cita es:");
+        System.out.println(cita);
+
+    }
+
+    // Atender la siguiente cita
+    private void atenderSiguienteCita() throws Exception {
+
+        System.out.println("\n===== ATENDER SIGUIENTE CITA =====");
+
+        Cita cita = sistema.atenderSiguienteCita();
+
+        System.out.println("La cita ha sido atendida correctamente");
         System.out.println(cita);
 
     }
