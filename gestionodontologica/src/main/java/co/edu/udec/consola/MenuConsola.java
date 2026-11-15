@@ -126,6 +126,10 @@ public class MenuConsola {
             case 11:
                 cancelarCita();
                 break;
+            
+            case 12:
+                eliminarCita();
+                break;
 
             case 0:
                 break;
@@ -454,5 +458,28 @@ public class MenuConsola {
 
         System.out.println("\nCita cancelada correctamente");
         System.out.println(sistema.buscarCita(codigo));
+    }
+
+    // Eliminar citas por el codigo
+    private void eliminarCita() throws Exception {
+
+        System.out.println("\n===== ELIMINAR CITA =====");
+
+        System.out.print("Codigo de la cita: ");
+        String codigo = scanner.nextLine().trim();
+
+        Cita cita = sistema.buscarCita(codigo);
+
+        if (cita == null) {
+            System.out.println("No existe una cita con ese codigo");
+        }
+
+        System.out.println("\nCita seleccionada:");
+        System.out.println(cita);
+
+        sistema.eliminarCita(codigo);
+
+        System.out.println("\nCita eliminada correctamente");
+
     }
 }
