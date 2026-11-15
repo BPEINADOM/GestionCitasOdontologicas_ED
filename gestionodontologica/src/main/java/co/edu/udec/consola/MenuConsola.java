@@ -131,6 +131,10 @@ public class MenuConsola {
                 eliminarCita();
                 break;
 
+            case 13:
+                mostrarEstadisticas();
+                break;
+
             case 0:
                 break;
 
@@ -482,4 +486,10 @@ public class MenuConsola {
         System.out.println("\nCita eliminada correctamente");
 
     }
+
+    // Mostrar las estadisticas del sistema de citas
+    private void mostrarEstadisticas() {
+        sistema.mostrarEstadisticas();
+    }
+
 }
