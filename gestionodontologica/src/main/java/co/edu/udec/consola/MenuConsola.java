@@ -17,9 +17,9 @@ public class MenuConsola {
     private final Scanner scanner;
     private final SistemaCitas sistema;
 
-    public MenuConsola() {
+    public MenuConsola(SistemaCitas sistema) {
         scanner = new Scanner(System.in);
-        sistema = new SistemaCitas();
+        this.sistema = sistema;
     }
 
     // Inicia el ciclo principal del menu

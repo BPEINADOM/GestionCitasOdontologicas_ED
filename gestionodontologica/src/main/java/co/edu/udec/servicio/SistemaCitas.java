@@ -371,5 +371,144 @@ public class SistemaCitas {
         System.out.println("Citas en cola de atencion: " + citasPendientes.size());
         
     }
+
+    // Preparar los datos de prueba
+    public void cargarDatosPrueba() throws Exception {
+
+        // Registrar pacientes
+        registrarPaciente(new Paciente("1001", "Carlos Perez", "3001111111"));
+        registrarPaciente(new Paciente("1002", "Maria Rodriguez", "3002222222"));
+        registrarPaciente(new Paciente("1003", "Andres Gomez", "3003333333"));
+        registrarPaciente(new Paciente("1004", "Laura Martinez", "3004444444"));
+        registrarPaciente(new Paciente("1005", "Daniel Torres", "3005555555"));
+
+        // Registrar odontologos
+        registrarOdontologo(new Odontologo("2001", "Pedro Ramirez", "Ortodoncia"));
+        registrarOdontologo(new Odontologo("2002", "Ana Castillo", "Endodoncia"));
+        registrarOdontologo(new Odontologo("2003", "Luis Herrera", "Periodoncia"));
+
+        // Registrar citas con diferentes prioridades y fechas
+        registrarCita(new Cita(
+            "C001", 
+            buscarPaciente("1001"), 
+            buscarOdontologo("2001"), 
+            LocalDateTime.of(2026, 11, 20, 8, 0), 
+            Prioridad.BAJA
+        ));
+
+        registrarCita(new Cita(
+            "C002", 
+            buscarPaciente("1002"), 
+            buscarOdontologo("2002"), 
+            LocalDateTime.of(2026, 11, 20, 9, 0), 
+            Prioridad.CRITICA
+        ));
+
+        registrarCita(new Cita(
+            "C003", 
+            buscarPaciente("1003"), 
+            buscarOdontologo("2003"), 
+            LocalDateTime.of(2026, 11, 20, 10, 0), 
+            Prioridad.MEDIA
+        ));
+
+        registrarCita(new Cita(
+            "C004", 
+            buscarPaciente("1004"), 
+            buscarOdontologo("2001"), 
+            LocalDateTime.of(2026, 11, 21, 8, 0), 
+            Prioridad.ALTA
+        ));
+
+        registrarCita(new Cita(
+            "C005", 
+            buscarPaciente("1005"), 
+            buscarOdontologo("2002"), 
+            LocalDateTime.of(2026, 11, 21, 9, 0), 
+            Prioridad.BAJA
+        ));
+
+        registrarCita(new Cita
+            ("C006", 
+            buscarPaciente("1001"), 
+            buscarOdontologo("2003"), 
+            LocalDateTime.of(2026, 11, 21, 10, 0), 
+            Prioridad.CRITICA
+        ));
+
+        registrarCita(new Cita(
+            "C007", 
+            buscarPaciente("1002"), 
+            buscarOdontologo("2001"), 
+            LocalDateTime.of(2026, 11, 22, 8, 0), 
+            Prioridad.MEDIA
+        ));
+
+        registrarCita(new Cita(
+            "C008", 
+            buscarPaciente("1003"), 
+            buscarOdontologo("2002"), 
+            LocalDateTime.of(2026, 11, 22, 9, 0), 
+            Prioridad.ALTA
+        ));
+
+        registrarCita(new Cita(
+            "C009", 
+            buscarPaciente("1004"), 
+            buscarOdontologo("2003"), 
+            LocalDateTime.of(2026, 11, 22, 10, 0), 
+            Prioridad.BAJA
+        ));
+
+        registrarCita(new Cita(
+            "C010", 
+            buscarPaciente("1005"), 
+            buscarOdontologo("2001"), 
+            LocalDateTime.of(2026, 11, 23, 8, 0), 
+            Prioridad.CRITICA
+        ));
+
+        registrarCita(new Cita(
+            "C011", 
+            buscarPaciente("1001"), 
+            buscarOdontologo("2002"), 
+            LocalDateTime.of(2026, 11, 23, 9, 0), 
+            Prioridad.MEDIA
+        ));
+
+        registrarCita(new Cita(
+            "C012", 
+            buscarPaciente("1002"), 
+            buscarOdontologo("2003"), 
+            LocalDateTime.of(2026, 11, 23, 10, 0), 
+            Prioridad.ALTA
+        ));
+
+        registrarCita(new Cita(
+            "C013", 
+            buscarPaciente("1003"), 
+            buscarOdontologo("2001"), 
+            LocalDateTime.of(2026, 11, 24, 8, 0), 
+            Prioridad.BAJA
+        ));
+
+        registrarCita(new Cita(
+            "C014", 
+            buscarPaciente("1004"), 
+            buscarOdontologo("2002"), 
+            LocalDateTime.of(2026, 11, 24, 9, 0), 
+            Prioridad.CRITICA
+        ));
+
+        registrarCita(new Cita(
+            "C015", 
+            buscarPaciente("1005"), 
+            buscarOdontologo("2003"), 
+            LocalDateTime.of(2026, 11, 24, 10, 0), 
+            Prioridad.MEDIA
+        ));
+
+        System.out.println("Datos de prueba cargados correctamente.");
+    }
     
 }
