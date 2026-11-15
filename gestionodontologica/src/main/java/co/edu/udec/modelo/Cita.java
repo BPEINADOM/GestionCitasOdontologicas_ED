@@ -13,14 +13,13 @@ public class Cita {
     private EstadoCita estado;
 
 
-    public Cita(String codigo, Paciente paciente, Odontologo odontologo, LocalDateTime fechaHora, Prioridad prioridad,
-            EstadoCita estado) {
+    public Cita(String codigo, Paciente paciente, Odontologo odontologo, LocalDateTime fechaHora, Prioridad prioridad) {
         this.codigo = codigo;
         this.paciente = paciente;
         this.odontologo = odontologo;
         this.fechaHora = fechaHora;
         this.prioridad = prioridad;
-        this.estado = estado;
+        this.estado = EstadoCita.PENDIENTE;
     }
 
 
