@@ -118,6 +118,10 @@ public class MenuConsola {
             case 9:
                 atenderSiguienteCita();
                 break;
+            
+            case 10:
+                modificarCita();
+                break;
 
             case 0:
                 break;
@@ -349,5 +353,78 @@ public class MenuConsola {
         System.out.println("La cita ha sido atendida correctamente");
         System.out.println(cita);
 
+    }
+
+    // Modificar las citas pendientes
+    private void modificarCita() throws Exception {
+
+        System.out.println("\n===== MODIFICAR CITA =====");
+
+        System.out.print("Codigo de la cita: ");
+        String codigo = scanner.nextLine().trim();
+
+        Cita cita = sistema.buscarCita(codigo);
+
+        if (cita == null) {
+            System.out.println("No existe una cita con ese codigo");
+        }
+
+        System.out.println("Cita actual:");
+        System.out.println(cita);
+
+        System.out.print("\nDocumento del nuevo paciente: ");
+        String documentoPaciente = scanner.nextLine().trim();
+
+        Paciente paciente = sistema.buscarPaciente(documentoPaciente);
+
+        if (paciente == null) {
+            System.out.println("No existe un paciente con ese documento");
+            return;
+        }
+
+        System.out.print("Documento del nuevo odontologo: ");
+        String documentoOdontologo = scanner.nextLine().trim();
+
+        Odontologo odontologo = sistema.buscarOdontologo(documentoOdontologo);
+
+        if (odontologo == null) {
+            System.out.println("No existe un odontologo con ese documento");
+            return;
+        }
+
+        System.out.print("Nueva fecha y hora (dd/MM/yyyy HH:mm): ");
+        String fechaTexto = scanner.nextLine().trim();
+
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        LocalDateTime fechaHora = LocalDateTime.parse(fechaTexto, formato);
+
+        System.out.println("\nPrioridades disponibles:");
+        System.out.println("1. CRITICA");
+        System.out.println("2. ALTA");
+        System.out.println("3. MEDIA");
+        System.out.println("4. BAJA");
+
+        System.out.print("Seleccione la nueva prioridad: ");
+        int opcionPrioridad = Integer.parseInt(scanner.nextLine());
+
+        Prioridad prioridad;
+
+        switch (opcionPrioridad) {
+            case 1:
+                prioridad = Prioridad.CRITICA; break;
+            case 2: 
+                prioridad = Prioridad.ALTA; break;
+            case 3: 
+                prioridad = Prioridad.MEDIA; break;
+            case 4: 
+                prioridad = Prioridad.BAJA; break;
+            default:
+                throw new Exception("La prioridad seleccionada no es valida");
+        }
+
+        sistema.modificarCita(codigo, paciente, odontologo, fechaHora, prioridad);
+
+        System.out.println("\nCita modificada correctamente.");
+        System.out.println(sistema.buscarCita(codigo));
     }
 }
