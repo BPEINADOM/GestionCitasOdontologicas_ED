@@ -15,6 +15,7 @@ import co.edu.udec.modelo.Cita;
 import co.edu.udec.modelo.EstadoCita;
 import co.edu.udec.modelo.Odontologo;
 import co.edu.udec.modelo.Paciente;
+import co.edu.udec.modelo.Prioridad;
 
 public class SistemaCitas {
 
@@ -233,6 +234,58 @@ public class SistemaCitas {
         return citasPendientes.size();
     }
 
-    
+    // Modifica los datos de una cita existente
+    public void modificarCita(String codigo, Paciente nuevoPaciente, Odontologo nuevoOdontologo, LocalDateTime nuevaFecha, Prioridad nuevaPrioridad) throws Exception {
+
+        Cita cita = buscarCita(codigo);
+
+        if (cita == null) {
+            throw new Exception("No existe una cita con ese codigo");
+        }
+
+        if (cita.getEstado() != EstadoCita.PENDIENTE) {
+            throw new Exception("Solo se pueden modificar citas pendientes");
+        }
+
+        if (nuevoPaciente == null || !existePaciente(nuevoPaciente.getDocumento())) {
+            throw new Exception("El paciente no esta registrado");
+        }
+
+        if (nuevoOdontologo == null || !existeOdontologo(nuevoOdontologo.getDocumento())) {
+            throw new Exception("El odontologo no esta registrado");
+        }
+
+        if (nuevaFecha == null) {
+            throw new Exception("La nueva fecha es obligatoria");
+        }
+
+        if (nuevaPrioridad == null) {
+            throw new Exception("La nueva prioridad es obligatoria");
+        }
+
+        // Retirar la cita de la cola antes de cambiar mi privacidad
+        citasPendientes.remove(cita);
+
+        // Retirar la cita de su fecha anterior en el TreeMap
+        List<Cita> citasAnteriores = citasPorfecha.get(cita.getFechaHora());
+
+        citasAnteriores.remove(cita);
+
+        if (citasAnteriores.isEmpty())  {
+            citasPorfecha.remove(cita.getFechaHora());
+        }
+
+        // Modificar los datos de la cita
+        cita.setPaciente(nuevoPaciente);
+        cita.setOdontologo(nuevoOdontologo);
+        cita.setFechaHora(nuevaFecha);
+        cita.setPrioridad(nuevaPrioridad);
+
+        // Incorporar la cita a su nueva fecha
+        citasPorfecha.computeIfAbsent(nuevaFecha, fecha -> new ArrayList<>()).add(cita);
+
+        // Volver a incorporar la cita a la cola de prioridad
+        citasPendientes.offer(cita);
+    }
     
 }
