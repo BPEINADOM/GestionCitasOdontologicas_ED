@@ -287,5 +287,57 @@ public class SistemaCitas {
         // Volver a incorporar la cita a la cola de prioridad
         citasPendientes.offer(cita);
     }
+
+    // Cancela una cita sin eliminarla del historial
+    public void cancelarCita(String codigo) throws Exception {
+
+        Cita cita = buscarCita(codigo);
+
+        if (cita == null) {
+            throw new Exception("No existe una cita con ese codigo");
+        }
+
+        if (cita.getEstado() != EstadoCita.PENDIENTE) {
+            throw new Exception("La cita no se encuentra pendiente");
+        }
+
+        // Retirar la cita de la cola de atencion
+        citasPendientes.remove(cita);
+
+        // Cambiar su estado
+        cita.setEstado(EstadoCita.CANCELADA);
+
+    }
+
+    // Eliminar definitivamente una cita de todas las colecciones
+    public void eliminarCita(String codigo) throws Exception {
+
+        Cita cita = buscarCita(codigo);
+
+        if (cita == null) {
+            throw new Exception("No existe una cita con ese codigo");
+        }
+
+        // Eliminar de la lista general
+        citas.remove(cita);
+
+        // Eliminar del mapa de busqueda
+        citasPorCodigo.remove(codigo);
+
+        // Eliminar de la cola de prioridad
+        citasPendientes.remove(cita);
+
+        // Eliminar del mapa organizado por fecha
+        List<Cita> citasDelDia = citasPorfecha.get(cita.getFechaHora());
+
+        if (citasDelDia != null) {
+
+            citasDelDia.remove(cita);
+
+            if (citasDelDia.isEmpty()) {
+                citasPorfecha.remove(cita.getFechaHora());
+            }
+        }
+    }
     
 }
